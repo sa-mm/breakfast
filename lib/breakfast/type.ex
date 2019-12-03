@@ -7,7 +7,8 @@ defmodule Breakfast.Type do
     integer: :is_integer,
     float: :is_float,
     number: :is_number,
-    atom: :is_atom
+    atom: :is_atom,
+    boolean: :is_boolean
   }
 
   @understood_primative_types Map.keys(@understood_primative_type_predicate_mappings)

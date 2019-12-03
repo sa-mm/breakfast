@@ -402,4 +402,42 @@ defmodule BreakfastTest do
                }
     end
   end
+
+  describe "Boolean examples" do
+    defmodule BooleanExample do
+      use Breakfast
+
+      cereal do
+        field :email, String.t()
+        field :age, integer()
+        field :human, boolean()
+      end
+    end
+
+    test "should be able to decode a boolean" do
+      params = %{
+        "email" => "my@email.com",
+        "age" => 20,
+        "human" => true
+      }
+
+      result = Breakfast.decode(BooleanExample, params)
+      assert match?(%Breakfast.Yogurt{errors: []}, result)
+    end
+
+    test "should have error when failing to pass a boolean" do
+      params = %{
+        "email" => "my@email.com",
+        "age" => 20,
+        "human" => "true"
+      }
+
+      result = Breakfast.decode(BooleanExample, params)
+
+      assert match?(
+               %Breakfast.Yogurt{errors: [human: "expected a boolean, got: \"true\""]},
+               result
+             )
+    end
+  end
 end
